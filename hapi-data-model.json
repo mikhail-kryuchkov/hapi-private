@@ -1,0 +1,1820 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "v1",
+        "title": "HAPI data model"
+    },
+    "paths": {},
+    "definitions": {
+        "UserAuthenticationRequest": {
+            "title": "UserAuthenticationRequest",
+            "type": "object",
+
+            "properties": {
+                "login": {
+                    "type": "string",
+                    "description": "Your login"
+                },
+                "password": {
+                    "type": "string",
+                    "description": "Your password"
+                }
+            },
+            "required": [
+                "login",
+                "password"
+            ],
+            "example": {
+                "login": "hapi@hapicloud.io",
+                "password": "demo"
+            }
+        },
+        "RepositoryAuthenticationRequest": {
+            "title": "RepositoryAuthenticationRequest",
+            "type": "object",
+            "properties": {
+                "repositoryAccessId": {
+                    "type": "string",
+                    "description": "Repository identification which is created for organisation"
+                },
+                "repositoryAccessKey": {
+                    "type": "string",
+                    "description": "Repository identification password which is created for organisation"
+                }
+            },
+            "required": [
+                "repositoryAccessId",
+                "repositoryAccessKey"
+            ],
+            "example": {
+                "repositoryAccessId": "temp-repository-id",
+                "repositoryAccessKey": "temp-repository-key"
+            }
+        },
+        "AuthorizationCodeRequest": {
+            "title": "AuthorizationCodeRequest",
+            "type": "object",
+            "properties": {
+                "clientId" : {
+                    "type": "string",
+                    "description": "Client identifier which is created for client system"
+                },
+                "clientSecret" : {
+                    "type": "string",
+                    "description": "Client password which is created for client system"
+                },
+                "code" : {
+                    "type": "string",
+                    "description": "Authorization code for single usage for performing authentication operation"
+                }
+            },
+            "required": [
+                "clientId",
+                "clientSecret",
+                "code"
+            ],
+            "example": {
+                "clientId" : "fGKjdkKj83hbh91qWibhe9zsXX341jcn",
+                "clientSecret" : "J28h0dhiaDUfiWHWbe24hDBNCi9dhjsshd4hd7-tx4rhUFhvyQ_R44cjxuvh_9is",
+                "code" : "jfH7fhJSQnvBN9Zp"
+            }
+        },
+        "BindingCodeRequest": {
+            "title": "BindingCodeRequest",
+            "type": "object",
+            "properties": {
+                "oobCode" : {
+                    "type": "string",
+                    "description": "Literal code in response from Single Sign On service as a first part of multifactor authentication flow"
+                },
+                "bindingCode" : {
+                    "type": "string",
+                    "description": "Digital code from SMS message from user mobile phone as a second part of multifactor authentication flow"
+                }
+            },
+            "required": [
+                "oobCode",
+                "bindingCode"
+            ],
+            "example": {
+                "oobCode" : "Fe26.2**5Hdlais64hJff22ae78cb001b89a28c8d16b7b26aa3794ffc40b0b05c5fa8410*0zdhb5l_6C1HsIjGJpLLMA*Q1jCdiTaNRY-5d7Sc9XfKVqZy4-NVostGrvPK_yLGR80Ylj-Gso5bXMHAbt3H5HtahmutBq-ojNe02D3Lm_Fyyh6nzV3UOtLKWumZ3RLlwqfB8x7DpPe9uymC48p5aG-y_xLwnmBiFam4h3OXvXdsIU4E7n0hC3oX4Qm9NaHE7TMGarnfYOt0hWgg8jXl6ySKc-raUjLD3bIovon3iYLEsmikyAEwKh5YgvhYf5oexbuZ9op6XvVhmXG-zerfsFzOppIxD9axuojye28N8hOhQL0orLjDtUHqgI5Em6R-YMWnyatTFbwNU7uieqHHB9zBpcjRFXvpfNqwlyjjdnT0w*1541761953649*84aba24a9794074256555c671db685c4a1f8527c2113a060c8409012bb899f20*d2mr5_Fr6qw95vxHq3_qWFX_5v7o3xOK0GtdeKJ-11k",
+                "bindingCode" : "839626"
+            }
+        },
+        "AuthorizationCodeResponse": {
+            "title": "AuthorizationCodeResponse",
+            "type": "object",
+            "properties": {
+                "authorizationCode": {
+                    "type": "string",
+                    "description": "Authorization code for single usage for performing authentication operation"
+                }
+            },
+            "required": [
+                "authorizationCode"
+            ]
+        },
+        "RecordSet": {
+            "title": "RecordSet",
+            "type": "object",
+            "properties": {
+                "total": {
+                    "type": "integer",
+                    "description": ""
+                },
+                "offset": {
+                    "type": "integer",
+                    "description": ""
+                },
+                "entities": {
+                    "type": "array",
+                    "items": {
+                        "type": "object"
+                    }
+                }
+            }
+        },
+        "RepositorySearchRequest": {
+            "title": "RepositorySearchRequest",
+            "type": "object",
+            "properties": {
+                "offset": {
+                    "type": "integer",
+                    "description": "Offset from the begging of retrieved values. If no offset value has provided then default (0) will be used"
+                },
+                "limit": {
+                    "type": "integer",
+                    "description": "Limit of how much values will be retrieved. If no limit value has provided then default (100) will be used"
+                },
+                "fromDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Filter date value since which reservations will be retrieved (included), in YYYY-MM-DDThh:mm:ss.sssZ format. Filter value in repository is latest update time."
+                },
+                "toDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Filter date value to which reservations will be retrieved (included), in YYYY-MM-DDThh:mm:ss.sssZ format. Filter value in repository is latest update time."
+                },
+                "chainCode": {
+                    "type": "string",
+                    "description": "HAPI internal representation of hotel chain. Together with propertyCode compose to unique hotel identifier."
+                },
+                "propertyCode": {
+                    "type": "string",
+                    "description": "HAPI internal representation of hotel property. Together with chainCode compose to unique hotel identifier."
+                }
+            },
+            "required": [
+                "fromDate"
+            ]
+        },
+        "RepositoryReservationDto": {
+            "title": "RepositoryReservationDto",
+            "type": "object",
+            "properties": {
+                "createdDate": {
+                    "type": "string",
+                    "description": "Reservation create date in hotel, in YYYY-MM-DDThh:mm:ss.sss format"
+                },
+                "cancelledDate": {
+                    "type": "string",
+                    "description": "Reservation cancellation date in hotel, in YYYY-MM-DDThh:mm:ss.sss format"
+                },
+                "cancellationNumber": {
+                    "type": "string",
+                    "description": "Cancellation number for reservation. may be supplied externally or returned from pms"
+                },
+                "cancellationComment": {
+                    "type": "string",
+                    "description": "Cancellation comment why reservation was cancelled"
+                },
+                "modifiedDate": {
+                    "type": "string",
+                    "description": "Date at which the record was last modified in the PMS, in YYYY-MM-DDThh:mm:ss.sss format",
+                    "example": "2018-10-17T21:50:56.676"
+                },
+                "children": {
+                    "type": "string"
+                },
+                "adults": {
+                    "type": "string"
+                },
+                "roomStays": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RoomStayDto"
+                    }
+                },
+                "isTaxAndFeesInclusive": {
+                    "type": "boolean",
+                    "description": "Indicates if taxes and fees are included in room rate amount"
+                },
+                "reservationNumber": {
+                    "type": "string",
+                    "description": "Unique reservation id within given hotel"
+                },
+                "bookingConfirmationId": {
+                    "type": "string",
+                    "description": "Unique confirmationId within given hotel"
+                },
+                "arrivalDate": {
+                    "type": "string",
+                    "description": "Check-in date, in YYYY-MM-DD format",
+                    "format": "date"
+                },
+                "departureDate": {
+                    "type": "string",
+                    "description": "Check-out date, in YYYY-MM-DD format",
+                    "format": "date"
+                },
+                "hotel": {
+                    "$ref": "#/definitions/HotelDto"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "comments": {
+                    "type": "array",
+                    "minItems": 0,
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "reservationOriginatorCode": {
+                    "type": "string",
+                    "description": "User or system that created reservation"
+                },
+                "guests": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/GuestDto"
+                    }
+                },
+                "services": {
+                    "type": "array",
+                    "description": "Services that related to reservation",
+                    "minItems": 0,
+                    "items": {
+                        "$ref": "#/definitions/ServiceDto"
+                    }
+                },
+                "repositoryRecordCreated": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Record create date in repository, in YYYY-MM-DDThh:mm:ss.sss format"
+                },
+                "repositoryRecordUpdated": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Record update date in repository, in YYYY-MM-DDThh:mm:ss.sss format"
+                }
+            }
+        },
+        "ServiceDto": {
+            "title": "ServiceDto",
+            "type": "object",
+            "description": "",
+            "properties": {
+                "serviceInventoryCode": {
+                    "type": "string",
+                    "description": "Products within a reservation"
+                },
+                "startDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Start date in YYYY-MM-DDThh:mm:ss.sss format"
+                },
+                "endDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "End date in YYYY-MM-DDThh:mm:ss.sss format"
+                },
+                "rateAmount": {
+                    "$ref": "#/definitions/RateAmountDto"
+                },
+                "rateCode": {
+                    "type": "string",
+                    "description": "Package rate code",
+                    "example": "RMCE"
+                }
+            }
+        },
+        "HotelDto": {
+            "title": "HotelDto",
+            "type": "object",
+            "description": "Information about hotel",
+            "properties": {
+                "propertyId": {
+                    "$ref": "#/definitions/PropertyIdDto"
+                },
+                "externalPropertyId": {
+                    "type": "object",
+                    "description": "Property id in the external system (e.g. PMS)"
+                }
+            }
+        },
+        "PropertyIdDto": {
+            "title": "PropertyIdDto",
+            "type": "object",
+            "description": "Property id in HAPI system. Presented by pair (chain code, property code)",
+            "properties": {
+                "chainCode": {
+                    "type": "string"
+                },
+                "propertyCode": {
+                    "type": "string"
+                }
+            }
+        },
+        "GuestDto": {
+            "title": "GuestDto",
+            "type": "object",
+            "properties": {
+                "profile": {
+                    "$ref": "#/definitions/ProfileDto"
+                },
+                "preRegistered": {
+                    "type": "boolean"
+                },
+                "reservationReferences": {
+                    "type": "array",
+                    "minItems": 0,
+                    "items": {
+                        "$ref": "#/definitions/ReservationReferenceDto"
+                    }
+                }
+            }
+        },
+        "ReservationReferenceDto": {
+            "title": "ReservationReferenceDto",
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "referenceNumber": {
+                    "type": "string"
+                }
+            }
+        },
+        "ProfileDto": {
+            "title": "ProfileDto",
+            "type": "object",
+            "properties": {
+                "profileGuid": {
+                    "type": "string"
+                },
+                "profileId": {
+                    "type": "string"
+                },
+                "profileType": {
+                    "$ref": "#/definitions/ProfileType"
+                },
+                "hotel": {
+                    "$ref": "#/definitions/HotelDto"
+                },
+                "name": {
+                    "$ref": "#/definitions/ProfileNameDto"
+                },
+                "dateOfBirth": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "emails": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ProfileEmailDto"
+                    }
+                },
+                "phones": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ProfilePhoneNumberDto"
+                    }
+                },
+                "loyaltyPrograms": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/LoyaltyProgramDto"
+                    }
+                },
+                "addresses": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ProfileAddressDto"
+                    }
+                },
+                "repositoryRecordCreated": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Record create date in repository, in YYYY-MM-DDThh:mm:ss.sss format"
+                },
+                "repositoryRecordUpdated": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Record update date in repository, in YYYY-MM-DDThh:mm:ss.sss format"
+                },
+                "travelAgentId": {
+                    "type": "string",
+                    "description": "Travel Agent IATA number"
+                },
+                "commissionPlanCode": {
+                    "type": "string",
+                    "description": "Commission plan for Travel Agent"
+                },
+                "creator": {
+                    "type": "string",
+                    "description": "User or interface who created the profile"
+                },
+                "createdDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Date and Time the profile was created"
+                },
+                "primaryLanguage": {
+                    "type": "string",
+                    "description": "Primary language of individual"
+                },
+                "occupation": {
+                    "type": "string",
+                    "description": "Job title, occupation of guest"
+                },
+                "idDocuments": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/IdDocumentDto"
+                    }
+                },
+                "contact": {
+                    "type": "string",
+                    "description": "Contact info (non-guest profile)"
+                },
+                "arNumber": {
+                    "type": "string",
+                    "description": "Accounts receivable number (non-guest profile)"
+                },
+                "allowedToContactViaEmail": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "IdDocumentDto": {
+            "title": "IdDocumentDto",
+            "type": "object",
+            "properties": {
+                "documentType": {
+                    "type": "string"
+                },
+                "documentNumber": {
+                    "type": "string"
+                },
+                "documentName": {
+                    "type": "string"
+                },
+                "primary": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "InventoryBlockDto": {
+            "title": "InventoryBlockDto",
+            "type": "object",
+            "properties": {
+                "roomType": {
+                    "type": "string",
+                    "description": "Room type"
+                },
+                "inventoryDate": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Date of inventory in repository, in YYYY-MM-DD format"
+                },
+                "numberToBlock": {
+                    "type": "integer",
+                    "description": "Number of rooms for this block per day per room type"
+                },
+                "rates": {
+                    "type": "array",
+                    "description": "Rate amount per number of occupying persons in block detail",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "#/definitions/RateAmountDto"
+                    }
+                },
+                "cutoffDate": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Date at which block gets released back into inventory, in YYYY-MM-DD format",
+                    "example": "2018-09-24"
+                }
+            }
+        },
+        "AllotmentDto": {
+            "title": "AllotmentDto",
+            "type": "object",
+            "properties": {
+                "resortAllotmentId": {
+                    "type": "string",
+                    "title": "External allotment identifier"
+                },
+                "hotel": {
+                    "$ref": "#/definitions/HotelDto"
+                },
+                "blockStatus": {
+                    "type": "string",
+                    "description": "Block status"
+                },
+                "blockName": {
+                    "type": "string",
+                    "description": "Block name"
+                },
+                "blockCode": {
+                    "type": "string",
+                    "description": "Block code"
+                },
+                "effectiveDate": {
+                    "type": "string",
+                    "description": "Start date of allotment in repository, in YYYY-MM-DDThh:mm:ss.sss format"
+                },
+                "expireDate": {
+                    "type": "string",
+                    "description": "End date of allotment in repository, in YYYY-MM-DDThh:mm:ss.sss format"
+                },
+                "ratePlanCode": {
+                    "type": "string",
+                    "description": "Rate plan code"
+                },
+                "market": {
+                    "$ref": "#/definitions/MarketDto"
+                },
+                "sourceCode": {
+                    "type": "string",
+                    "description": "Source code"
+                },
+                "channelCode": {
+                    "type": "string",
+                    "description": "Channel code"
+                },
+                "inventoryBlocks": {
+                    "type": "array",
+                    "minItems": 0,
+                    "description": "Set of inventory blocks.",
+                    "items": {
+                        "$ref": "#/definitions/InventoryBlockDto"
+                    }
+                },
+                "notes": {
+                    "type": "array",
+                    "minItems": 0,
+                    "description": "Set of allotment notes",
+                    "items": {
+                        "$ref": "#/definitions/CommentDto"
+                    }
+                },
+                "cateringBlock": {
+                    "type": "string",
+                    "description": "Is this a sales/catering block",
+                    "example": "N"
+                },
+                "bookingStatus": {
+                    "type": "string",
+                    "description": "Block booking status",
+                    "example": "DEF"
+                },
+                "profiles": {
+                    "type": "array",
+                    "minItems": 0,
+                    "description": "Set of related profile references",
+                    "items": {
+                        "$ref": "#/definitions/ProfileReferenceDto"
+                    }
+                },
+                "owner": {
+                    "type": "string",
+                    "description": "Block owner",
+                    "example": "ALL"
+                },
+                "packages": {
+                    "type": "array",
+                    "description": "Block package codes",
+                    "example": "1799A25",
+                    "minItems": 0,
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "blockType": {
+                    "type": "string",
+                    "description": "Block type",
+                    "example": "ELASTIC"
+                },
+                "reservationType": {
+                    "type": "string",
+                    "description": "Block reservation type",
+                    "example": "GDED"
+                },
+                "bookingMethod": {
+                    "type": "string",
+                    "description": "Method in which the block was booked",
+                    "example": "IWEB"
+                },
+                "repositoryRecordCreated": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Record create date in repository, in YYYY-MM-DDThh:mm:ss.sss format"
+                },
+                "repositoryRecordUpdated": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Record update date in repository, in YYYY-MM-DDThh:mm:ss.sss format"
+                }
+            }
+        },
+        "CommentDto": {
+            "title": "CommentDto",
+            "type": "object",
+            "description": "Comment associated to object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "if allotment comment, system that created comment",
+                    "example": "DELPHI"
+                },
+                "text": {
+                    "type": "string",
+                    "example": "Group rates will be offered (3) days prior to arrival"
+                }
+            }
+        },
+        "ProfileReferenceDto": {
+            "title": "ProfileReferenceDto",
+            "type": "object",
+            "description": "Reference to profile",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "profile type",
+                    "example": "GROUP"
+                },
+                "id": {
+                    "type": "string",
+                    "description": "profile id",
+                    "example": "3T7HJX"
+                }
+            }
+        },
+        "ProfileAddressDto": {
+            "title": "ProfileAddressDto",
+            "type": "object",
+            "properties": {
+                "addressType": {
+                    "type": "string"
+                },
+                "isPrimary": {
+                    "type": "boolean"
+                },
+                "street": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "postalCode": {
+                    "type": "string"
+                },
+                "address1": {
+                    "type": "string"
+                },
+                "address2": {
+                    "type": "string"
+                },
+                "address3": {
+                    "type": "string"
+                },
+                "address4": {
+                    "type": "string"
+                },
+                "stateProvince": {
+                    "$ref": "#/definitions/ProfileAddressStateProvinceDto"
+                },
+                "country": {
+                    "$ref": "#/definitions/ProfileAddressCountryDto"
+                }
+            }
+        },
+        "ProfileAddressStateProvinceDto": {
+            "title": "ProfileAddressStateProvinceDto",
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "ProfileAddressCountryDto": {
+            "title": "ProfileAddressCountryDto",
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "RateAmountDto": {
+            "title": "RateAmountDto",
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "number",
+                    "description": "This is the rate amount"
+                },
+                "currencyCode": {
+                    "type": "string",
+                    "description": "This is the currency code indicating in which currency the rate amounts are displayed"
+                }
+            }
+        },
+        "LoyaltyProgramDto": {
+            "title": "LoyaltyProgramDto",
+            "type": "object",
+            "properties": {
+                "programType": {
+                    "type": "string",
+                    "description": "Loyalty program type"
+                },
+                "membershipId": {
+                    "type": "string",
+                    "description": "Loyalty program account number"
+                }
+            }
+        },
+        "ProfilePhoneNumberDto": {
+            "title": "ProfilePhoneNumberDto",
+            "type": "object",
+            "properties": {
+                "countryAccessNumber": {
+                    "type": "string"
+                },
+                "cityCode": {
+                    "type": "string"
+                },
+                "phoneExtension": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "type": {
+                    "$ref": "#/definitions/ProfilePhoneNumberTypeDto"
+                }
+            }
+        },
+        "ProfileEmailDto": {
+            "title": "ProfileEmailDto",
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "type": {
+                    "$ref": "#/definitions/ProfileEmailTypeDto"
+                }
+            }
+        },
+        "ProfileEmailTypeDto": {
+            "type": "string",
+            "enum": [
+                "PRIVATE",
+                "CORPORATE",
+                "OTHER"
+            ]
+        },
+        "ProfilePhoneNumberTypeDto": {
+            "type": "string",
+            "enum": [
+                "PRIVATE",
+                "CORPORATE",
+                "HOME",
+                "BUSINESS",
+                "MOBILE",
+                "FAX",
+                "OTHER"
+            ]
+        },
+        "ProfileType": {
+            "type": "string",
+            "enum": [
+                "PERSON",
+                "COMPANY",
+                "TRAVEL_AGENT",
+                "GROUP_PROFILE",
+                "OTHER"
+            ]
+        },
+        "ProfileNameDto": {
+            "title": "ProfileNameDto",
+            "type": "object",
+            "properties": {
+                "firstName": {
+                    "type": "string",
+                    "description": "Profile First Name"
+                },
+                "lastName": {
+                    "type": "string",
+                    "description": "Profile Last Name"
+                },
+                "middleName": {
+                    "type": "string",
+                    "description": "Profile Middle Name"
+                },
+                "salutation": {
+                    "type": "string",
+                    "description": "Salutation for guest (e.g. Mr)"
+                }
+            }
+        },
+        "RoomStayDto": {
+            "title": "RoomStayDto",
+            "type": "object",
+            "properties": {
+                "roomType": {
+                    "type": "string",
+                    "description": "Code designating the specific room requested"
+                },
+                "roomNumber": {
+                    "type": "string",
+                    "description": "Room number"
+                },
+                "rateCode": {
+                    "type": "string"
+                },
+                "market": {
+                    "$ref": "#/definitions/MarketDto"
+                },
+                "roomCount": {
+                    "type": "integer"
+                },
+                "sourceCode": {
+                    "type": "string",
+                    "description": "Source code for the source of the rate used in the reservation"
+                },
+                "allotmentCode": {
+                    "type": "string",
+                    "description": "Code of allotment if stay is a part of allotment message"
+                },
+                "paymentMethod": {
+                    "type": "string",
+                    "description": "Payment Method used in the reservation"
+                },
+                "compYN": {
+                    "type": "string",
+                    "description": "compYN used in the reservation"
+                },
+                "pmsGuestId": {
+                    "type": "string",
+                    "description": "pmsGuestId used in the reservation"
+                },
+                "actualArrivalDate": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Actual Arrival Date for the reservation"
+                },
+                "actualDepartureDate": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Actual Departure Date for the reservation"
+                },
+                "dailyRates": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/DailyRateDto"
+                    }
+                },
+                "roomRates": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/RoomRateDto"
+                    }
+                },
+                "stayRevenues": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/StayRevenueDto"
+                    }
+                },
+                "dailyRevenues": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/DailyRevenueDto"
+                    }
+                },
+                "complimentaryCode": {
+                    "type": "string"
+                },
+                "confidentialRate": {
+                    "type": "boolean"
+                },
+                "guaranteeInfo": {
+                    "$ref": "#/definitions/GuaranteeInfoDto"
+                },
+                "channelCode": {
+                    "type": "string"
+                },
+                "reservationStatus": {
+                    "type": "string"
+                },
+                "inventoryBlockCode": {
+                    "type": "string"
+                }
+            }
+        },
+        "GuaranteeInfoDto": {
+            "title": "GuaranteeInfoDto",
+            "type": "object",
+            "properties": {
+                "guaranteeType": {
+                    "type": "string"
+                }
+            }
+        },
+        "RoomRateDto": {
+            "title": "RoomRateDto",
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "number",
+                    "description": "The total amount to be charged for the reservation"
+                },
+                "expireDate": {
+                    "type": "string",
+                    "description": "Expire billing date exclusive, in YYYY-MM-DD format",
+                    "format": "date"
+                },
+                "effectiveDate": {
+                    "type": "string",
+                    "description": "Start billing date inclusive, in YYYY-MM-DD format",
+                    "format": "date"
+                },
+                "ratePlanCode": {
+                    "type": "string",
+                    "description": "Code designating the rate paired against the specific room requested"
+                },
+                "currencyCode": {
+                    "type": "string",
+                    "description": "Currency code"
+                }
+            }
+        },
+        "StayRevenueDto": {
+            "title": "StayRevenueDto",
+            "type": "object",
+            "properties": {
+                "revenueType": {
+                    "type": "string"
+                },
+                "amount": {
+                    "type": "number"
+                },
+                "currencyCode": {
+                    "type": "string"
+                }
+            }
+        },
+        "DailyRateDto": {
+            "title": "DailyRateDto",
+            "type": "object",
+            "properties": {
+                "transactionDate": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "market": {
+                    "$ref": "#/definitions/MarketDto"
+                },
+                "pmsRate": {
+                    "$ref": "#/definitions/PmsRateDto"
+                }
+            }
+        },
+        "PmsRateDto": {
+            "title": "PmsRateDto",
+            "type": "object",
+            "properties": {
+                "valueNum": {
+                    "type": "number"
+                },
+                "currencyCode": {
+                    "type": "string"
+                }
+            }
+        },
+        "DailyRevenueDto": {
+            "title": "DailyRevenueDto",
+            "type": "object",
+            "properties": {
+                "transactionDate": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "revenueType": {
+                    "type": "string"
+                },
+                "currencyCode": {
+                    "type": "string"
+                },
+                "amount": {
+                    "type": "number"
+                }
+            }
+        },
+        "MarketDto": {
+            "additionalProperties": false,
+            "type": "object",
+            "properties": {
+                "marketCode": {
+                    "type": "string",
+                    "description": "Market Code"
+                },
+                "marketDescription": {
+                    "type": "string"
+                }
+            }
+        },
+        "StayDto": {
+            "title": "Stay",
+            "type": "object",
+            "properties": {
+                "hotel": {
+                    "$ref": "#/definitions/HotelDto"
+                },
+                "reservationNumber": {
+                    "type": "string"
+                },
+                "profileId": {
+                    "$ref": "#/definitions/ProfileDto"
+                },
+                "roomStays": {
+                    "$ref": "#/definitions/RoomStayDto"
+                },
+                "repositoryRecordCreated": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Record create date in repository, in YYYY-MM-DDThh:mm:ss.sss format"
+                },
+                "repositoryRecordUpdated": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Record update date in repository, in YYYY-MM-DDThh:mm:ss.sss format"
+                }
+            }
+        },
+        "LinkIdentityRequestDto": {
+            "title": "Link",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "guid of object to which link will be created"
+                },
+                "linkedSystemType": {
+                    "type": "string",
+                    "description": "Type of system, to which link belongs to. For example, SALESFORCE"
+                },
+                "linkedSystemId": {
+                    "type": "string",
+                    "description": "Unique identifier of system, to which link belongs to"
+                },
+                "linkedObjectId": {
+                    "type": "string",
+                    "description": "Id of object in external system"
+                },
+                "linkedObjectInfo": {
+                    "type": "string",
+                    "description": "Additional information about object in external system in json format"
+                }
+            },
+            "example" : {
+                "id": "ff519dc4125d4d0bb4d24b858a3a0af0",
+                "linkedSystemType": "SALESFORCE",
+                "linkedSystemId": "1",
+                "linkedObjectId":"XASDRF"
+            },
+            "required": [
+                "id",
+                "linkedSystemType",
+                "linkedObjectId"
+            ]
+        },
+        "ProfileSearchRequest": {
+            "title": "ProfileSearchRequest",
+            "type": "object",
+            "properties": {
+                "searchText": {
+                    "type": "string"
+                },
+                "filter": {
+                    "$ref": "#/definitions/Filter"
+                },
+                "isPersonProfile": {
+                    "type": "boolean"
+                },
+                "limit": {
+                    "type": "integer"
+                },
+                "offset": {
+                    "type": "integer"
+                },
+                "sorts": {
+                    "type": "array",
+                    "maxItems": 5,
+                    "items": {
+                        "$ref": "#/definitions/ProfileSearchSort"
+                    }
+                }
+            },
+            "example": {
+                "searchText": "%abc%",
+                "filter": {
+                    "all": [
+                        {
+                            "firstName": "Marat"
+                        },
+                        {
+                            "revenue": {
+                                "operator": ">=",
+                                "value": 14
+                            }
+                        },
+                        {
+                            "revenue": {
+                                "operator": "<",
+                                "value": 100
+                            }
+                        },
+                        {
+                            "nights": {
+                                "operator": ">",
+                                "value": 1
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "Link": {
+            "title": "Link",
+            "type": "object",
+            "properties": {
+                "systemId": {
+                    "type": "string"
+                },
+                "objectId": {
+                    "type": "string"
+                }
+            }
+        },
+        "ProfileStats": {
+            "title": "ProfileStats",
+            "type": "object",
+            "properties": {
+                "stays": {
+                    "type": "integer"
+                },
+                "revenue": {
+                    "$ref": "#/definitions/CurrencyValue"
+                },
+                "nights": {
+                    "type": "integer"
+                },
+                "links": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Link"
+                    }
+                }
+            }
+        },
+        "ProfileAnalyticsRecord": {
+            "title": "ProfileAnalyticsRecord",
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ProfileStats"
+                },
+                {
+                    "properties": {
+                        "profileInfo": {
+                            "$ref": "./hapi-data-model.json#/definitions/ProfileDto"
+                        }
+                    }
+                }
+            ]
+        },
+        "ProfileSearchResponse": {
+            "title": "ProfileSearchResponse",
+            "type": "object",
+            "properties": {
+                "offset": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                },
+                "profiles": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ProfileAnalyticsRecord"
+                    }
+                }
+            }
+        },
+        "CurrencyValue": {
+            "title": "CurrencyValue",
+            "properties": {
+                "value": {
+                    "type": "number"
+                },
+                "currency": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "value",
+                "currency"
+            ]
+        },
+        "ProfileMetricsByYearRecord": {
+            "title": "ProfileMetricsByYearRecord",
+            "type": "object",
+            "properties": {
+                "year": {
+                    "type": "integer"
+                },
+                "stays": {
+                    "type": "integer"
+                },
+                "nights": {
+                    "type": "integer"
+                },
+                "revenue": {
+                    "$ref": "#/definitions/CurrencyValue"
+                }
+            },
+            "required": [
+                "year",
+                "stays",
+                "nights",
+                "revenue"
+            ]
+        },
+        "ProfileMetricsByPropertyRecord": {
+            "title": "ProfileMetricsByPropertyRecord",
+            "type": "object",
+            "properties": {
+                "property" : {
+                    "$ref": "#/definitions/MetricsPropertyId"
+                },
+                "stays": {
+                    "type": "integer"
+                },
+                "nights": {
+                    "type": "integer"
+                },
+                "revenue": {
+                    "$ref": "#/definitions/CurrencyValue"
+                }
+            },
+            "required": [
+                "property",
+                "stays",
+                "nights",
+                "revenue"
+            ]
+        },
+        "MetricsPropertyId" : {
+            "type": "object",
+            "properties": {
+                "name": { "type": "string" },
+                "propertyId" : {
+                    "$ref": "#/definitions/PropertyIdDto"
+                }
+            }
+        },
+        "ProfileFieldsFilter": {
+            "title": "ProfileFieldsFilter",
+            "type": "object",
+            "properties": {
+                "profileGuid": {
+                    "type": "string"
+                },
+                "firstName": {
+                    "type": "string"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "hasLinks": {
+                    "type": "boolean"
+                },
+                "revenue": {
+                    "$ref": "#/definitions/ConditionalValue"
+                },
+                "nights": {
+                    "$ref": "#/definitions/ConditionalValue"
+                },
+                "stays": {
+                    "$ref": "#/definitions/ConditionalValue"
+                },
+                "links": {
+                    "$ref": "#/definitions/ConditionalValue"
+                }
+            }
+        },
+        "AnyClause": {
+            "title": "AnyClause",
+            "type": "object",
+            "properties": {
+                "any": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Filter"
+                    }
+                }
+            }
+        },
+        "AllClause": {
+            "title": "AllClause",
+            "type": "object",
+            "properties": {
+                "all": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Filter"
+                    }
+                }
+            }
+        },
+        "Filter": {
+            "title": "Filter",
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/ProfileFieldsFilter"
+                },
+                {
+                    "$ref": "#/definitions/AnyClause"
+                },
+                {
+                    "$ref": "#/definitions/AllClause"
+                }
+            ]
+        },
+        "ProfileSearchSort": {
+            "title": "ProfileSearchSort",
+            "type": "object",
+            "properties": {
+                "property": {
+                    "type": "string",
+                    "enum": [
+                        "firstName",
+                        "lastName",
+                        "email",
+                        "city",
+                        "state",
+                        "hasLinks",
+                        "revenue",
+                        "nights",
+                        "stays"
+                    ]
+                },
+                "direction": {
+                    "type": "string",
+                    "enum": [
+                        "asc",
+                        "desc"
+                    ]
+                }
+            },
+            "required": [
+                "property",
+                "direction"
+            ]
+        },
+        "ConditionalValue": {
+            "title": "ConditionalValue",
+            "type": "object",
+            "properties": {
+                "operator": {
+                    "type": "string",
+                    "enum": [
+                        "<",
+                        "<=",
+                        ">",
+                        ">=",
+                        "="
+                    ]
+                },
+                "value": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "operator",
+                "value"
+            ]
+        },
+        "InventoriesDto": {
+            "title": "InventoriesDto",
+            "type": "object",
+            "properties": {
+                "hotel": {
+                    "$ref": "#/definitions/HotelDto"
+                },
+                "inventory": {
+                    "type": "array",
+                    "description": "Inventory count information",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "#/definitions/InventoryDto"
+                    }
+                }
+            }
+        },
+        "InventoryDto": {
+            "title": "InventoryDto",
+            "type": "object",
+            "properties": {
+                "inventoryInfo": {
+                    "$ref": "#/definitions/InventoryInfoDto"
+                },
+                "inventoryCounts": {
+                    "type": "array",
+                    "description": "Count info for type",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "#/definitions/InventoryCountDto"
+                    }
+                }
+            }
+        },
+        "InventoryInfoDto": {
+            "title": "InventoryInfoDto",
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "Inventory type",
+                    "example": "KNS"
+                },
+                "dates": {
+                    "$ref": "#/definitions/TimeSpanDto"
+                }
+            }
+        },
+        "InventoryCountDto": {
+            "title": "InventoryCountDto",
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "description": "Count type",
+                    "example": "roomCount"
+                },
+                "count": {
+                    "type": "string",
+                    "description": "Count value",
+                    "example": "125"
+                }
+            }
+        },
+        "TimeSpanDto": {
+            "title": "TimeSpanDto",
+            "type": "object",
+            "properties": {
+                "start": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Start date of event, in YYYY-MM-DD format",
+                    "example": "2018-09-24"
+                },
+                "end": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "End date of event, in YYYY-MM-DD format",
+                    "example": "2018-09-25"
+                }
+            }
+        },
+        "HurdleDto": {
+            "title": "HurdleDto",
+            "type": "object",
+            "properties": {
+                "hotel": {
+                    "$ref": "#/definitions/HotelDto"
+                },
+                "dates": {
+                    "$ref": "#/definitions/TimeSpanDto"
+                },
+                "yieldCategory": {
+                    "type": "string",
+                    "description": "represents the yield management category",
+                    "example": "STD"
+                },
+                "hurdleAmount": {
+                    "type": "number",
+                    "description": "Base rate amount for hurdle",
+                    "example": "90"
+                },
+                "deltaAmount": {
+                    "type": "number",
+                    "description": "monetary value added to the hurdle rate for each additional room sold up to the ceiling",
+                    "example": "5"
+                },
+                "currencyCode": {
+                    "type": "string",
+                    "description": "currency code indicating in which currency the rate amounts are displayed",
+                    "example": "USD"
+                },
+                "ceiling": {
+                    "type": "integer",
+                    "description": "number of rooms to be sold to which the delta value should be added"
+                },
+                "sellLimit": {
+                    "type": "integer",
+                    "description": "maximum number of rooms to be sold in the room types linked to the yield category",
+                    "example": "10"
+                },
+                "roomsSold": {
+                    "type": "integer",
+                    "description": "number of rooms sold in the room types linked to the YIELD CATEGORY since the last update",
+                    "example": "5"
+                },
+                "lengthOfStay": {
+                    "type": "integer",
+                    "description": "length of stay for this hurdle rate",
+                    "example": "5"
+                }
+            }
+        },
+        "RateRestrictionDto": {
+            "title": "RateRestrictionDto",
+            "type": "object",
+            "properties": {
+                "hotel": {
+                    "$ref": "#/definitions/HotelDto"
+                },
+                "dates": {
+                    "$ref": "#/definitions/TimeSpanDto"
+                },
+                "code": {
+                    "type": "string",
+                    "description": "current restriction code",
+                    "example": "S_OPEN"
+                },
+                "rateCriteria": {
+                    "type": "string",
+                    "description": "rate restriction type",
+                    "example": "RATECODE"
+                },
+                "roomCriteria": {
+                    "type": "string",
+                    "description": "room restriction type",
+                    "example": "ROOMTYPE"
+                },
+                "rateCode": {
+                    "type": "string",
+                    "description": "restriction rate code",
+                    "example": "RACK"
+                },
+                "roomType": {
+                    "type": "string",
+                    "description": "restriction room type",
+                    "example": "KNS"
+                },
+                "daysOfWeek": {
+                    "type": "array",
+                    "description": "days of week that apply to restriction",
+                    "minItems": 0,
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "numberOfDays": {
+                    "type": "integer",
+                    "description": "min or max number of days required by restriction",
+                    "example": "5"
+                }
+            }
+        },
+        "RateHeaderDto": {
+            "title": "RateHeaderDto",
+            "type": "object",
+            "properties": {
+                "hotel": {
+                    "$ref": "#/definitions/HotelDto"
+                },
+                "sellDates": {
+                    "$ref": "#/definitions/TimeSpanDto"
+                },
+                "category": {
+                    "type": "string",
+                    "description": "rate category",
+                    "example": "STD"
+                },
+                "marketCode": {
+                    "type": "string",
+                    "description": "rate marketing code",
+                    "example": "DM"
+                },
+                "sourceCode": {
+                    "type": "string",
+                    "description": "rate source code",
+                    "example": "SRC"
+                },
+                "status": {
+                    "type": "string",
+                    "description": "active status of rate",
+                    "example": "ACTIVE"
+                },
+                "yieldStatus": {
+                    "type": "string",
+                    "description": "is rate yieldable",
+                    "example": "FULLY"
+                }
+            }
+        },
+        "RateDetailDto": {
+            "title": "RateDetailDto",
+            "type": "object",
+            "properties": {
+                "dates": {
+                    "$ref": "#/definitions/TimeSpanDto"
+                },
+                "rateCode": {
+                    "type": "string",
+                    "description": "rate code",
+                    "example": "RACK"
+                },
+                "marketCode": {
+                    "type": "string",
+                    "description": "rate marketing code",
+                    "example": "DM"
+                },
+                "sourceCode": {
+                    "type": "string",
+                    "description": "rate source code",
+                    "example": "SRC"
+                },
+                "packages": {
+                    "type": "string",
+                    "description": "packages included in rate",
+                    "example": "ACTIVE"
+                },
+                "roomTypes": {
+                    "type": "string",
+                    "description": "valid room types for rate",
+                    "example": "K1"
+                },
+                "daysOfWeek": {
+                    "type": "array",
+                    "description": "Days of the week for which the rate is valid",
+                    "example": "FRIDAY,SATURDAY,SUNDAY",
+                    "minItems": 1,
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "rates": {
+                    "type": "array",
+                    "description": "Rate amounts by number of guests and guest type",
+                    "items": {
+                        "$ref": "#/definitions/RateDto"
+                    }
+                }
+            }
+        },
+        "RateDto": {
+            "title": "RateDto",
+            "type": "object",
+            "properties": {
+                "guests": {
+                    "type": "integer",
+                    "description": "number of guests",
+                    "example": 1
+                },
+                "guestType": {
+                    "type": "string",
+                    "description": "Type of guest",
+                    "example": "Adult"
+                },
+                "amount": {
+                    "type": "number",
+                    "description": "amount of rate",
+                    "example": "59.50"
+                }
+            }
+        },
+        "CommandProgressStatusDto": {
+            "type": "object",
+            "title": "Command process status",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "entity": {
+                    "type": "string",
+                    "description": "Type of object. For example RESERVATION, PROFILE"
+                },
+                "action": {
+                    "type": "string",
+                    "description": "Action of the operation. For example CREATE, UPDATE"
+                },
+                "cancellationId": {
+                    "type": "string"
+                },
+                "reservationId": {
+                    "type": "string"
+                },
+                "profileId": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "created": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "completed": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            },
+            "example": {
+                "operationId": "24e03d4d-6c10-4a7e-bade-4d77e0a714b8",
+                "entity": "ENTITY_TYPE",
+                "action": "ACTION_TYPE",
+                "status": "IN PROGRESS",
+                "created": "2018-12-14T13:46:44.402Z"
+            }
+        },
+        "Error": {
+            "title": "Error",
+            "type": "object",
+            "properties": {
+                "timestamp": {
+                    "type": "number"
+                },
+                "status": {
+                    "type": "integer"
+                },
+                "error": {
+                    "type": "string"
+                },
+                "exception": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "timestamp",
+                "status",
+                "error",
+                "message",
+                "path"
+            ],
+            "example": {
+                "timestamp": "2018-12-17T10:44:03.088+0000",
+                "status": 400,
+                "error": "Bad Request",
+                "exception": "org.springframework.security.authentication.BadCredentialsException",
+                "message": "Could not find user 'test' or invalid password",
+                "path": "/api/v1/login"
+            }
+        }
+    }
+}
