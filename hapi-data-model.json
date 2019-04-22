@@ -13,11 +13,11 @@
             "properties": {
                 "login": {
                     "type": "string",
-                    "description": "Your login"
+                    "description": "Your login changed"
                 },
                 "password": {
                     "type": "string",
-                    "description": "Your password"
+                    "description": "Your password changed"
                 }
             },
             "required": [
